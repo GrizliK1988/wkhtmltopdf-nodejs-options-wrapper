@@ -4,23 +4,26 @@
  */
 
 var PageOptionsEntity = require('../options/PageOptions'),
-    HeadersAndFooterOptions = require('../options/HeadersAndFooterOptions');
+    HeadersAndFooterOptions = require('../options/HeadersAndFooterOptions'),
+    OptionsToString = require('../options/OptionsToString');
 
-function Page(input) {
+function Page(data) {
+    var options = data || {};
+
     /**
      * @type {string|null}
      */
-    this.input = input || null;
+    this.input = options.input || null;
 
     /**
      * @type {PageOptions}
      */
-    this.options = new PageOptionsEntity();
+    this.options = new PageOptionsEntity(options.options || {});
 
     /**
      * @type {HeadersAndFooterOptions}
      */
-    this.headersAndFooterOptions = new HeadersAndFooterOptions();
+    this.headersAndFooterOptions = new HeadersAndFooterOptions(options.headersAndFooterOptions || {});
 }
 
 Page.prototype = {
@@ -84,11 +87,11 @@ Page.prototype = {
 
     toString: function() {
         var command = 'page ' + this.getInput();
-        if (this.options.toString()) {
-            command += ' ' + this.options.toString();
+        if (OptionsToString(this.options)) {
+            command += ' ' + OptionsToString(this.options);
         }
-        if (this.headersAndFooterOptions.toString()) {
-            command += ' ' + this.headersAndFooterOptions.toString();
+        if (OptionsToString(this.headersAndFooterOptions)) {
+            command += ' ' + OptionsToString(this.headersAndFooterOptions);
         }
         return command;
     }

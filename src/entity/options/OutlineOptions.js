@@ -1,15 +1,19 @@
 /**
- * This file is generated from wkhtmltopdf documentation at 11:13:05 of 27.06.2015
+ * This file is generated from wkhtmltopdf documentation at 13:52:12 of 19.07.2015
  */
-function OutlineOptions() {
+var extend = require('extend');
+/* istanbul ignore next */
+function OutlineOptions(data) {
     this.options = {};
     this.options['dump-default-toc-xsl'] = null;
     this.options['dump-outline'] = null;
     this.options['outline'] = null;
     this.options['no-outline'] = null;
     this.options['outline-depth'] = null;
+    this.options = extend(this.options, data || {})
 }
 
+/* istanbul ignore next */
 OutlineOptions.prototype = {
     /**
      * Dump the default TOC xsl style sheet to
@@ -140,7 +144,5 @@ OutlineOptions.prototype = {
     }
 
 };
-
-OutlineOptions.prototype.toString = require('./Base').toString;
 
 module.exports = OutlineOptions;
