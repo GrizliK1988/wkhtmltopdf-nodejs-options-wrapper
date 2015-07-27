@@ -23,7 +23,7 @@ describe('CreateRequest tests', function() {
 
     it('tests constructor', function() {
         var request = new CreateRequest({
-            pages: [new Page({input: 'http://test'})],
+            pages: [{input: 'http://test'}],
             globalOptions: {dpi: 300},
             tocOptions: {'toc-header-text': 'text'},
             outlineOptions: {'outline-depth': 3},
@@ -36,6 +36,9 @@ describe('CreateRequest tests', function() {
         expect(request.getTOCOptions().getTocHeaderText()).toBe('text');
         expect(request.getOutlineOptions().getOutlineDepth()).toBe(3);
         expect(request.getHeadersAndFooterOptions().getFooterLeft()).toBe('footer-text');
+
+        request = new CreateRequest();
+        expect(request.getTOCOptions()).toBeNull();
     });
 
     it('tests toString method', function() {
@@ -69,5 +72,31 @@ describe('CreateRequest tests', function() {
         globalOptions.setCopies(15);
         request.setGlobalOptions(globalOptions);
         expect(request.toString()).toContain(OptionsToString(globalOptions));
+    });
+
+    it('tests toObject method', function() {
+        var _ = require('underscore'),
+            request = new CreateRequest();
+
+        expect(_.isEqual(request.toObject(), {
+            pages: [],
+            globalOptions: (new GlobalOptions()).options,
+            tocOptions: null,
+            outlineOptions: (new OutlineOptions()).options,
+            headersAndFooterOptions: (new HeadersAndFooterOptions()).options
+        })).toBeTruthy();
+
+        request.addPage(new Page({input: 'test'}));
+        request.getGlobalOptions().setCopies(5).enableCollate();
+        request.getOutlineOptions().enableOutline();
+        request.enableToc();
+
+        expect(_.isEqual(request.toObject(), {
+            pages: [(new Page({input: 'test'})).options],
+            globalOptions: (new GlobalOptions({copies: 5, collate: ''})).options,
+            tocOptions: (new TOCOptions()).options,
+            outlineOptions: (new OutlineOptions({outline: ''})).options,
+            headersAndFooterOptions: (new HeadersAndFooterOptions()).options
+        })).toBeTruthy();
     });
 });

@@ -8,7 +8,8 @@ var GlobalOptions = require('./options/GlobalOptions'),
     TOCOptions = require('./options/TOCOptions'),
     OutlineOptions = require('./options/OutlineOptions'),
     HeadersAndFooterOptions = require('./options/HeadersAndFooterOptions'),
-    OptionsToString = require('./options/OptionsToString');
+    OptionsToString = require('./options/OptionsToString'),
+    Page = require('./request_parts/Page');
 
 function CreateRequest(data) {
     var options = data || {};
@@ -16,7 +17,10 @@ function CreateRequest(data) {
     /**
      * @type {Page[]}
      */
-    this.pages = options.pages || [];
+    var pages = options.pages || [];
+    this.pages = pages.map(function(page) {
+        return new Page(page);
+    });
 
     /**
      * @type {GlobalOptions}
@@ -188,6 +192,18 @@ CreateRequest.prototype = {
             });
         return globalOptionsCommand + ' ' + headerAndFooterCommand + ' ' + pageCommands.join(' ') + ' ' + tocCommand
             + ' ' + outlineCommand;
+    },
+
+    toObject: function() {
+        return {
+            pages: this.pages.map(function(page) {
+                return page.options;
+            }),
+            globalOptions: this.globalOptions.options,
+            tocOptions: this.tocOptions !== null ? this.tocOptions.options : null,
+            outlineOptions: this.outlineOptions.options,
+            headersAndFooterOptions: this.headersAndFooterOptions.options
+        };
     }
 };
 
