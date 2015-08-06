@@ -1,7 +1,9 @@
 /**
- * This file is generated from wkhtmltopdf documentation at 11:13:05 of 27.06.2015
+ * This file is generated from wkhtmltopdf documentation at 13:52:12 of 19.07.2015
  */
-function PageOptions() {
+var extend = require('extend');
+/* istanbul ignore next */
+function PageOptions(data) {
     this.options = {};
     this.options['allow'] = [];
     this.options['background'] = null;
@@ -58,8 +60,10 @@ function PageOptions() {
     this.options['viewport-size'] = null;
     this.options['window-status'] = null;
     this.options['zoom'] = null;
+    this.options = extend(this.options, data || {})
 }
 
+/* istanbul ignore next */
 PageOptions.prototype = {
     /**
      * Allow the file or files from the specified
@@ -1578,7 +1582,5 @@ PageOptions.prototype = {
     }
 
 };
-
-PageOptions.prototype.toString = require('./Base').toString;
 
 module.exports = PageOptions;

@@ -1,7 +1,9 @@
 /**
- * This file is generated from wkhtmltopdf documentation at 11:13:05 of 27.06.2015
+ * This file is generated from wkhtmltopdf documentation at 13:52:12 of 19.07.2015
  */
-function TOCOptions() {
+var extend = require('extend');
+/* istanbul ignore next */
+function TOCOptions(data) {
     this.options = {};
     this.options['disable-dotted-lines'] = null;
     this.options['toc-header-text'] = null;
@@ -9,8 +11,10 @@ function TOCOptions() {
     this.options['disable-toc-links'] = null;
     this.options['toc-text-size-shrink'] = null;
     this.options['xsl-style-sheet'] = null;
+    this.options = extend(this.options, data || {})
 }
 
+/* istanbul ignore next */
 TOCOptions.prototype = {
     /**
      * Do not use dotted lines in the toc
@@ -157,7 +161,5 @@ TOCOptions.prototype = {
     }
 
 };
-
-TOCOptions.prototype.toString = require('./Base').toString;
 
 module.exports = TOCOptions;
