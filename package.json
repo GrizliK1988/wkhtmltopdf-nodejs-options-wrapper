@@ -2,7 +2,7 @@
   "name": "wkhtmltopdf-nodejs-entity",
   "version": "0.0.2",
   "description": "Wkhtmltopdf wrapper for node js",
-  "main": "index.js",
+  "main": "example.js",
   "scripts": {
     "test": "istanbul cover --include-all-sources jasmine-node test"
   },
