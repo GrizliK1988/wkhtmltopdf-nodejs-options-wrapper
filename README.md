@@ -1,7 +1,7 @@
 # wkhtmltopdf-nodejs-entity
 
-Contains entities that wrap wkhtmltopdf options. Can covert options to string and to lain object.
+Contains entities that wrap wkhtmltopdf options. Can covert options to string and to plain object.
 
 # Testing
 
-**npm test** will run unit tests.
+**npm test** command will run unit tests.
