@@ -4,7 +4,7 @@
   "description": "Wkhtmltopdf wrapper for node js",
   "main": "index.js",
   "scripts": {
-    "test": "grunt test"
+    "test": "istanbul cover --include-all-sources jasmine-node test"
   },
   "repository": {
     "type": "git",
@@ -21,10 +21,12 @@
   },
   "homepage": "https://github.com/GrizliK1988/wkhtmltopdf-nodejs#readme",
   "dependencies": {
-    "jasmine-core": "^2.3.4",
-    "karma": "^0.12.37",
-    "karma-jasmine": "^0.3.6",
-    "karma-phantomjs-launcher": "^0.2.0",
-    "phantomjs": "^1.9.17"
+    "extend": "^3.0.0"
+  },
+  "devDependencies": {
+    "istanbul": "^0.3.17",
+    "jasmine": "^2.3.1",
+    "jasmine-node": "^1.14.5",
+    "underscore": "^1.8.3"
   }
 }

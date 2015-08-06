@@ -1,7 +1,9 @@
 /**
- * This file is generated from wkhtmltopdf documentation at 11:13:05 of 27.06.2015
+ * This file is generated from wkhtmltopdf documentation at 13:52:12 of 19.07.2015
  */
-function HeadersAndFooterOptions() {
+var extend = require('extend');
+/* istanbul ignore next */
+function HeadersAndFooterOptions(data) {
     this.options = {};
     this.options['footer-center'] = null;
     this.options['footer-font-name'] = null;
@@ -22,8 +24,10 @@ function HeadersAndFooterOptions() {
     this.options['header-right'] = null;
     this.options['header-spacing'] = null;
     this.options['replace'] = [];
+    this.options = extend(this.options, data || {})
 }
 
+/* istanbul ignore next */
 HeadersAndFooterOptions.prototype = {
     /**
      * Centered footer text
@@ -450,7 +454,5 @@ HeadersAndFooterOptions.prototype = {
     }
 
 };
-
-HeadersAndFooterOptions.prototype.toString = require('./Base').toString;
 
 module.exports = HeadersAndFooterOptions;

@@ -1,7 +1,9 @@
 /**
- * This file is generated from wkhtmltopdf documentation at 11:13:05 of 27.06.2015
+ * This file is generated from wkhtmltopdf documentation at 13:52:12 of 19.07.2015
  */
-function GlobalOptions() {
+var extend = require('extend');
+/* istanbul ignore next */
+function GlobalOptions(data) {
     this.options = {};
     this.options['collate'] = null;
     this.options['no-collate'] = null;
@@ -31,8 +33,10 @@ function GlobalOptions() {
     this.options['readme'] = null;
     this.options['title'] = null;
     this.options['version'] = null;
+    this.options = extend(this.options, data || {})
 }
 
+/* istanbul ignore next */
 GlobalOptions.prototype = {
     /**
      * Collate when printing multiple copies
@@ -740,7 +744,5 @@ GlobalOptions.prototype = {
     }
 
 };
-
-GlobalOptions.prototype.toString = require('./Base').toString;
 
 module.exports = GlobalOptions;

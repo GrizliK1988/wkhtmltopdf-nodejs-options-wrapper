@@ -7,37 +7,44 @@
 var GlobalOptions = require('./options/GlobalOptions'),
     TOCOptions = require('./options/TOCOptions'),
     OutlineOptions = require('./options/OutlineOptions'),
-    HeadersAndFooterOptions = require('./options/HeadersAndFooterOptions');
+    HeadersAndFooterOptions = require('./options/HeadersAndFooterOptions'),
+    OptionsToString = require('./options/OptionsToString'),
+    Page = require('./request_parts/Page');
 
-function CreateRequest() {
+function CreateRequest(data) {
+    var options = data || {};
+
     /**
      * @type {Page[]}
      */
-    this.pages = [];
+    var pages = options.pages || [];
+    this.pages = pages.map(function(page) {
+        return new Page(page);
+    });
 
     /**
      * @type {GlobalOptions}
      */
-    this.globalOptions = new GlobalOptions();
+    this.globalOptions = new GlobalOptions(options.globalOptions || {});
 
     /**
      * Table of contents options
      *
      * @type {TOCOptions}
      */
-    this.tocOptions = new TOCOptions();
+    this.tocOptions = options.tocOptions ? new TOCOptions(options.tocOptions) : null;
 
     /**
      * Bookmark options
      *
      * @type {OutlineOptions}
      */
-    this.outlineOptions = new OutlineOptions();
+    this.outlineOptions = new OutlineOptions(options.outlineOptions || {});
 
     /**
      * @type {HeadersAndFooterOptions}
      */
-    this.headersAndFooterOptions = new HeadersAndFooterOptions();
+    this.headersAndFooterOptions = new HeadersAndFooterOptions(options.headersAndFooterOptions || {});
 }
 
 CreateRequest.prototype = {
@@ -112,6 +119,26 @@ CreateRequest.prototype = {
     },
 
     /**
+     * Disables table of contents
+     *
+     * @returns {CreateRequest}
+     */
+    disableToc: function() {
+        this.tocOptions = null;
+        return this;
+    },
+
+    /**
+     * Enables table of contents
+     *
+     * @returns {CreateRequest}
+     */
+    enableToc: function() {
+        this.tocOptions = new TOCOptions();
+        return this;
+    },
+
+    /**
      * Set Outline Options (bookmark options)
      *
      * @param {OutlineOptions} outlineOptions
@@ -151,20 +178,32 @@ CreateRequest.prototype = {
     },
 
     toString: function() {
-        var globalOptionsCommand = this.globalOptions.toString(),
+        var globalOptionsCommand = OptionsToString(this.globalOptions),
 
-            tocOptionsCommand = this.tocOptions.toString(),
-            tocCommand = tocOptionsCommand ? 'toc ' + tocOptionsCommand : '',
+            tocOptionsCommand = this.tocOptions !== null ? OptionsToString(this.tocOptions) : '',
+            tocCommand = this.tocOptions !== null ? 'toc ' + tocOptionsCommand : '',
 
-            outlineCommand = this.outlineOptions.toString(),
+            outlineCommand = OptionsToString(this.outlineOptions),
 
-            headerAndFooterCommand = this.headersAndFooterOptions.toString(),
+            headerAndFooterCommand = OptionsToString(this.headersAndFooterOptions),
 
             pageCommands = this.pages.map(function(page) {
                 return page.toString();
             });
         return globalOptionsCommand + ' ' + headerAndFooterCommand + ' ' + pageCommands.join(' ') + ' ' + tocCommand
             + ' ' + outlineCommand;
+    },
+
+    toObject: function() {
+        return {
+            pages: this.pages.map(function(page) {
+                return page.options;
+            }),
+            globalOptions: this.globalOptions.options,
+            tocOptions: this.tocOptions !== null ? this.tocOptions.options : null,
+            outlineOptions: this.outlineOptions.options,
+            headersAndFooterOptions: this.headersAndFooterOptions.options
+        };
     }
 };
 

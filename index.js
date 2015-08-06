@@ -1,11 +1,4 @@
-/**
- * @type {CreateRequest}
- */
 var CreateRequestEntity = require('./src/entity/CreateRequest');
-
-/**
- * @type {Page}
- */
 var PageClass = require('./src/entity/request_parts/Page');
 
 var request = new CreateRequestEntity();
