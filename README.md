@@ -5,3 +5,7 @@ Contains entities that wrap wkhtmltopdf options. Can covert options to string an
 # Testing
 
 **npm test** command will run unit tests.
+
+# Usage
+
+Example of usage located in **example.js**
