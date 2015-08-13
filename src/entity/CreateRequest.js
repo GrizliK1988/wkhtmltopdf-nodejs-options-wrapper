@@ -197,7 +197,11 @@ CreateRequest.prototype = {
     toObject: function() {
         return {
             pages: this.pages.map(function(page) {
-                return page.options;
+                return {
+                    input: page.input,
+                    options: page.options.options,
+                    headersAndFooterOptions: page.headersAndFooterOptions.options
+                };
             }),
             globalOptions: this.globalOptions.options,
             tocOptions: this.tocOptions !== null ? this.tocOptions.options : null,

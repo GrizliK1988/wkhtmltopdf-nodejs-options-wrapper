@@ -2,8 +2,8 @@ var CreateRequestEntity = require('./src/entity/CreateRequest');
 var PageClass = require('./src/entity/request_parts/Page');
 
 var request = new CreateRequestEntity();
-var yaRuPage = new PageClass('http://ya.ru'),
-    vkRuPage = new PageClass('http://vk.ru');
+var yaRuPage = new PageClass({input: 'http://ya.ru'}),
+    vkRuPage = new PageClass({input: 'http://vk.ru'});
 
 yaRuPage.getOptions()
     .setZoom(2)
@@ -27,6 +27,4 @@ request.addPage(yaRuPage);
 request.addPage(vkRuPage);
 
 request.getGlobalOptions().setPageSize('A4').setMarginTop('1in');
-request.getTOCOptions().setTocHeaderText('Text');
-
-console.log(request.toString());
+request.enableToc().getTOCOptions().setTocHeaderText('Text');

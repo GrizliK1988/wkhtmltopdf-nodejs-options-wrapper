@@ -91,12 +91,21 @@ describe('CreateRequest tests', function() {
         request.getOutlineOptions().enableOutline();
         request.enableToc();
 
+        var page = new Page({input: 'test'});
         expect(_.isEqual(request.toObject(), {
-            pages: [(new Page({input: 'test'})).options],
+            pages: [{
+                input: page.input,
+                options: page.options.options,
+                headersAndFooterOptions: page.headersAndFooterOptions.options
+            }],
             globalOptions: (new GlobalOptions({copies: 5, collate: ''})).options,
             tocOptions: (new TOCOptions()).options,
             outlineOptions: (new OutlineOptions({outline: ''})).options,
             headersAndFooterOptions: (new HeadersAndFooterOptions()).options
         })).toBeTruthy();
+
+
+        var request2 = new CreateRequest(request.toObject());
+        expect(_.isEqual(request, request2)).toBeTruthy();
     });
 });
