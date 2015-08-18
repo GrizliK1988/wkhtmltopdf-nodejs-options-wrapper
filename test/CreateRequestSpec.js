@@ -83,13 +83,15 @@ describe('CreateRequest tests', function() {
             globalOptions: (new GlobalOptions()).options,
             tocOptions: null,
             outlineOptions: (new OutlineOptions()).options,
-            headersAndFooterOptions: (new HeadersAndFooterOptions()).options
+            headersAndFooterOptions: (new HeadersAndFooterOptions()).options,
+            debug: false
         })).toBeTruthy();
 
         request.addPage(new Page({input: 'test'}));
         request.getGlobalOptions().setCopies(5).enableCollate();
         request.getOutlineOptions().enableOutline();
         request.enableToc();
+        request.setDebug(true);
 
         var page = new Page({input: 'test'});
         expect(_.isEqual(request.toObject(), {
@@ -101,7 +103,8 @@ describe('CreateRequest tests', function() {
             globalOptions: (new GlobalOptions({copies: 5, collate: ''})).options,
             tocOptions: (new TOCOptions()).options,
             outlineOptions: (new OutlineOptions({outline: ''})).options,
-            headersAndFooterOptions: (new HeadersAndFooterOptions()).options
+            headersAndFooterOptions: (new HeadersAndFooterOptions()).options,
+            debug: true
         })).toBeTruthy();
 
 
