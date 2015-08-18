@@ -45,6 +45,8 @@ function CreateRequest(data) {
      * @type {HeadersAndFooterOptions}
      */
     this.headersAndFooterOptions = new HeadersAndFooterOptions(options.headersAndFooterOptions || {});
+
+    this.debug = options.debug || false;
 }
 
 CreateRequest.prototype = {
@@ -177,6 +179,23 @@ CreateRequest.prototype = {
         return this;
     },
 
+    /**
+     * @returns {boolean}
+     */
+    getDebug: function() {
+        return this.debug;
+    },
+
+    /**
+     * Enable/disable debug mode. In debug mode more output is provided
+     * @param debug
+     * @returns {CreateRequest}
+     */
+    setDebug: function(debug) {
+        this.debug = debug;
+        return this;
+    },
+
     toString: function() {
         var globalOptionsCommand = OptionsToString(this.globalOptions),
 
@@ -206,7 +225,8 @@ CreateRequest.prototype = {
             globalOptions: this.globalOptions.options,
             tocOptions: this.tocOptions !== null ? this.tocOptions.options : null,
             outlineOptions: this.outlineOptions.options,
-            headersAndFooterOptions: this.headersAndFooterOptions.options
+            headersAndFooterOptions: this.headersAndFooterOptions.options,
+            debug: this.debug
         };
     }
 };
