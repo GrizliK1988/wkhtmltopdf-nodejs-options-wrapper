@@ -62,7 +62,7 @@ module.exports = {
 **4. Compile client.js**
 
 Run **webpack** command from the folder where client.js and webpack.config.js are located. It will create **compiled.js**
-file that ca be used in html script tag.
+file that can be used in html script tag.
 
 **5. Finish**
 
