@@ -1,5 +1,5 @@
 {
-  "name": "wkhtmltopdf-nodejs-entity",
+  "name": "wkhtmltopdf-nodejs-options-wrapper",
   "version": "1.0.1",
   "description": "Wkhtmltopdf options wrapper for node js",
   "main": "index.js",
@@ -8,18 +8,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GrizliK1988/wkhtmltopdf-nodejs.git"
+    "url": "git+https://github.com/GrizliK1988/wkhtmltopdf-nodejs-options-wrapper.git"
   },
   "keywords": [
     "wkhtmltopdf",
     "nodejs"
   ],
   "author": "Dmitry Grachikov",
-  "license": "MIT",
+  "license": "ISC",
   "bugs": {
-    "url": "https://github.com/GrizliK1988/wkhtmltopdf-nodejs/issues"
+    "url": "https://github.com/GrizliK1988/wkhtmltopdf-nodejs-options-wrapper/issues"
   },
-  "homepage": "https://github.com/GrizliK1988/wkhtmltopdf-nodejs#readme",
+  "homepage": "https://github.com/GrizliK1988/wkhtmltopdf-nodejs-options-wrapper#readme",
   "dependencies": {
     "extend": "^3.0.0"
   },

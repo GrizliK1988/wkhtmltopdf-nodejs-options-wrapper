@@ -1,30 +1,27 @@
-var CreateRequestEntity = require('./src/entity/CreateRequest');
-var PageClass = require('./src/entity/request_parts/Page');
+var wkhtmlToPdf = require('wkhtmltopdf-nodejs-entity'),
+    io = require('socket.io-client');
 
-var request = new CreateRequestEntity();
-var yaRuPage = new PageClass({input: 'http://ya.ru'}),
-    vkRuPage = new PageClass({input: 'http://vk.ru'});
+var socket = io('http://127.0.0.1:3000');
 
-yaRuPage.getOptions()
-    .setZoom(2)
-    .enableDebugJavascript()
-    .setJavascriptDelay(200)
-    .addAllow('ya.ru')
-    .addAllow('google.com')
-    .addCookie('1', '2')
-    .addCookie('3', '4')
-    .addCustomHeader('hh1', 'vv1')
-    .addCustomHeader('hh2', 'vv2')
-    .addPost('hh2', 'vv2')
-    .addPost('hh1', 'vv2')
-    .addPostFile('hh1', 'vv2')
-;
+var page = new wkhtmlToPdf.Page(),
+    request = new wkhtmlToPdf.CreateRequest();
 
-vkRuPage.getOptions().setZoom(1).enableNoDebugJavascript().setJavascriptDelay(0).addRunScript('1.js').addRunScript('2.js');
+page.setInput('http://google.com');
 
-request.getHeadersAndFooterOptions().enableFooterLine().setHeaderLeft("Hi!").addReplace('111', '222');
-request.addPage(yaRuPage);
-request.addPage(vkRuPage);
+request.setDebug(true);
+request.addPage(page);
+request.getGlobalOptions().setPageSize('Letter');
 
-request.getGlobalOptions().setPageSize('A4').setMarginTop('1in');
-request.enableToc().getTOCOptions().setTocHeaderText('Text');
+socket.on('pdf:create:success', function(response) {
+    console.log('Pdf created!');
+    console.log(response);
+
+    socket.emit('delete', response.handle);
+});
+
+socket.on('pdf:create:fail', function(response) {
+    console.log('Pdf creation failed!');
+    console.log(response);
+});
+
+socket.emit('create', request.toObject());
