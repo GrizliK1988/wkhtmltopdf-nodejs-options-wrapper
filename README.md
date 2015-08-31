@@ -23,11 +23,14 @@ var socket = io('http://127.0.0.1:3000'); //<-address of websocket server.
 var page = new wkhtmlToPdf.Page(),
     request = new wkhtmlToPdf.CreateRequest();
 
-page.setInput('http://google.com');       //let's generate pdf from google page
+//let's generate pdf from google page
+page.setInput('http://google.com');
 
-request.setDebug(true);                   //we want to revieve debug out from server. it is useful if errors happen.
+//we want to revieve debug out from server. it is useful if errors happen.
+request.setDebug(true);
 request.addPage(page);
-request.getGlobalOptions().setPageSize('Letter'); //pdf page size is A4 by default
+//pdf page size is A4 by default
+request.getGlobalOptions().setPageSize('Letter');
 
 socket.on('pdf:create:success', function(response) {
     console.log('Pdf created!');
