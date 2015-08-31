@@ -1,6 +1,6 @@
 {
   "name": "wkhtmltopdf-nodejs-options-wrapper",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Wkhtmltopdf options wrapper for node js",
   "main": "index.js",
   "scripts": {
