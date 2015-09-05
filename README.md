@@ -18,7 +18,7 @@ It can be used in a client for **wkhtmltopdf-nodejs-ws-server** (it has to be st
 var wkhtmlToPdf = require('wkhtmltopdf-nodejs-options-wrapper'),
     io = require('socket.io-client');
 
-var socket = io('http://127.0.0.1:3000'); //<-address of websocket server.
+var socket = io('http://192.168.33.125:3000'); //<-address of websocket server.
 
 var page = new wkhtmlToPdf.Page(),
     request = new wkhtmlToPdf.CreateRequest();
@@ -26,25 +26,25 @@ var page = new wkhtmlToPdf.Page(),
 //let's generate pdf from google page
 page.setInput('http://google.com');
 
-//we want to revieve debug out from server. it is useful if errors happen.
-request.setDebug(true);
+request.setDebug(true); //all debug output will be returned from server
 request.addPage(page);
-//pdf page size is A4 by default
-request.getGlobalOptions().setPageSize('Letter');
+request.getGlobalOptions().setPageSize('Letter'); //default page size is A4
 
-socket.on('pdf:create:success', function(response) {
-    console.log('Pdf created!');
-    console.log(response);
-    console.log('Pdf is here: http://127.0.0.1:3000/result_' + response.handle + '.js');
-    socket.emit('delete', response.handle);
-});
+setTimeout(function() {
+    socket.emit('create', request.toObject());
 
-socket.on('pdf:create:fail', function(response) {
-    console.log('Pdf creation failed!');
-    console.log(response);
-});
+    socket.on('pdf:create:success', function(response) {
+        console.log('Pdf created: http://192.168.33.125:3000/result_' + response.handle + '.pdf');
+        console.log(response);
 
-socket.emit('create', request.toObject());
+        // later we can delete pdf: socket.emit('delete', response.handle);
+    });
+
+    socket.on('pdf:create:fail', function(response) {
+        console.log('Pdf creation failed!');
+        console.log(response);
+    });
+}, 2000);
 ```
 
 **3. Create webpack.config.js** file with webpack configuration:
