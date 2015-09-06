@@ -1,4 +1,5 @@
-var OptionsToString = require('../src/entity/options/OptionsToString'),
+var OptionsToList = require('../src/entity/options/OptionsToList'),
+    OptionsToString = require('../src/entity/options/OptionsToString'),
     TOCOptions = require('../src/entity/options/TOCOptions'),
     HeadersAndFooterOptions = require('../src/entity/options/HeadersAndFooterOptions'),
     OutlineOptions = require('../src/entity/options/OutlineOptions'),

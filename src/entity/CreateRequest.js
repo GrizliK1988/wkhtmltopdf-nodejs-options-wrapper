@@ -9,6 +9,7 @@ var GlobalOptions = require('./options/GlobalOptions'),
     OutlineOptions = require('./options/OutlineOptions'),
     HeadersAndFooterOptions = require('./options/HeadersAndFooterOptions'),
     OptionsToString = require('./options/OptionsToString'),
+    OptionsToList = require('./options/OptionsToList'),
     Page = require('./request_parts/Page');
 
 function CreateRequest(data) {
@@ -211,6 +212,31 @@ CreateRequest.prototype = {
             });
         return globalOptionsCommand + ' ' + headerAndFooterCommand + ' ' + pageCommands.join(' ') + ' ' + tocCommand
             + ' ' + outlineCommand;
+    },
+
+    toList: function() {
+        var globalOptionsCommand = OptionsToList(this.globalOptions),
+
+            tocCommandOptionsCommand = this.tocOptions !== null ? ['toc'].concat(OptionsToList(this.tocOptions)) : [],
+
+            outlineCommand = OptionsToList(this.outlineOptions),
+
+            headerAndFooterCommand = OptionsToList(this.headersAndFooterOptions),
+
+            pageCommands = this.pages.map(function(page) {
+                return page.toList();
+            });
+
+        var commandOptions = [];
+        commandOptions = commandOptions.concat(globalOptionsCommand);
+        commandOptions = commandOptions.concat(tocCommandOptionsCommand);
+        commandOptions = commandOptions.concat(outlineCommand);
+        commandOptions = commandOptions.concat(headerAndFooterCommand);
+        pageCommands.forEach(function(pageCommand) {
+            commandOptions = commandOptions.concat(pageCommand);
+        });
+
+        return commandOptions;
     },
 
     toObject: function() {

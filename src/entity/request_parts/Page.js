@@ -5,7 +5,8 @@
 
 var PageOptionsEntity = require('../options/PageOptions'),
     HeadersAndFooterOptions = require('../options/HeadersAndFooterOptions'),
-    OptionsToString = require('../options/OptionsToString');
+    OptionsToString = require('../options/OptionsToString'),
+    OptionsToList = require('../options/OptionsToList');
 
 function Page(data) {
     var options = data || {};
@@ -92,6 +93,17 @@ Page.prototype = {
         }
         if (OptionsToString(this.headersAndFooterOptions)) {
             command += ' ' + OptionsToString(this.headersAndFooterOptions);
+        }
+        return command;
+    },
+
+    toList: function() {
+        var command = ['page ' + this.getInput()];
+        if (OptionsToString(this.options)) {
+            command = command.concat(OptionsToList(this.options));
+        }
+        if (OptionsToString(this.headersAndFooterOptions)) {
+            command = command.concat(OptionsToList(this.headersAndFooterOptions));
         }
         return command;
     }
